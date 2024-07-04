@@ -1,12 +1,7 @@
 ﻿using Spectre.Console;
 using SpectreConsole;
+using System.Collections.Generic;
 
-/*
-- https://github.com/spectreconsole/spectre.console/discussions/162
-- [What does a lock statement do under the hood?](https://stackoverflow.com/questions/6029804/what-does-a-lock-statement-do-under-the-hood)
-	- generally preferred over using the Monitor class directly
-- [`Progress`](https://learn.microsoft.com/en-us/dotnet/api/system.progress-1?view=net-7.0) invokes callbacks for each reported progress value.
- */
 
 class Program
 {
@@ -39,13 +34,22 @@ class Program
 	{
 		AnsiConsole.MarkupLine("[blue]Start[/]");
 
-		try
+    //Column.ShowOtBooks(BookGroupEnum.Torah);
+    //Column.ShowOtBooks(BookGroupEnum.History);
+    //Column.ShowOtBooks(BookGroupEnum.Poetry);
+    //Column.ShowOtBooks(BookGroupEnum.MajorProphets);
+    //Column.ShowOtBooks(BookGroupEnum.MinorProphets);
+
+    //AnsiConsole.WriteLine();
+
+    try
 		{
 			if (Prompt.RaiseException())
 			{
 				int zero = 0;
 				int result = 1 / zero;
 			}
+
 			await AnsiConsole.Progress()
 					.StartAsync(async ctx =>
 					{
@@ -57,18 +61,20 @@ class Program
 		}
 		catch (Exception ex)
 		{
-			AnsiConsole.WriteException(ex, ExceptionFormats.ShortenEverything);
-		}
+      AnsiConsole.WriteLine();
+      AnsiConsole.WriteException(ex, ExceptionFormats.ShortenEverything);
+      AnsiConsole.WriteLine();
+    }
 
 		finally
 		{
-			//AnsiConsole.MarkupLine("[blue]Finished[/]");
-			AnsiConsole.Write(
-				new FigletText("Finished")
-				.Centered()
-				.Color(Color.Aqua));
-		}
+      AnsiConsole.Write(
+        new FigletText("Finished")
+        .Centered()
+        .Color(Color.Aqua));
+    }
 
+		//AnsiConsole.MarkupLine("[blue]End[/]");
 
 	}
 
@@ -83,5 +89,7 @@ class Program
 			progress.Report(new ProgressInfo { BookTaskIncrease = 2.5 });
 		}
 	}
+
+
 }
 
